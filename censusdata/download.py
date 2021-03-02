@@ -126,5 +126,10 @@ def download(src, year, geo, var, key=None, tabletype='detail', endpt=''):
 		else:
 			del data[key]
 	geoindex = [censusgeo([(key, geodata[key][i]) for key in geodata if key != 'NAME'], geodata['NAME'][i]) for i in range(len(geodata['NAME']))]
+	
+	for d in data:
+		if isinstance(data[d], list) and len(data[d]) > 1:
+			data[d] = str(data[d]).replace(",", "|")
+		
 	return pd.DataFrame(data, geoindex)
 
